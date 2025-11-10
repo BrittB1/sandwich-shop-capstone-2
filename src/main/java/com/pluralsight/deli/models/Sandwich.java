@@ -122,6 +122,20 @@ public Sandwich(SandwichSize size,BreadType breadType) {
 
     @Override
     public double calculatePrice() {
-        return 0;
+    double totalPrice = 0.0;
+
+    totalPrice += getSize().getBasePrice();
+
+    totalPrice += meat.size() * size.getMeatPrice();
+
+    if (hasExtraMeat && !meat.isEmpty()){
+        totalPrice += size.getExtraMeatPrice();
+    }
+    totalPrice += cheese.size() * size.getCheesePrice();
+
+    if (hasExtraCheese && !cheese.isEmpty()) {
+        totalPrice += size.getExtraCheesePrice();
+    }
+        return totalPrice;
     }
 }
