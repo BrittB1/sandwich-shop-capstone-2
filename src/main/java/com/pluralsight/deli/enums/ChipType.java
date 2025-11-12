@@ -3,7 +3,8 @@ package com.pluralsight.deli.enums;
 public enum ChipType {
     PLAIN_POTATO("Potato"),
     BARBECUE("Backyard BBQ"),
-    SPICY_CHILI("Sweet 'n' Spicy Chili");
+    SPICY_CHILI("Sweet 'n' Spicy Chili"),
+    CHEESY("Cheese");
 
     private final String displayName;
 

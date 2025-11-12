@@ -30,7 +30,7 @@ double total = 0;
     public String getOrderDetails() {
         StringBuilder details = new StringBuilder();
 
-        details.append("\n ----Order Details -----");
+        details.append("\n----Order Details -----\n");
 
         if (items.isEmpty()) {
             details.append("No items in order!");
@@ -40,7 +40,7 @@ double total = 0;
                 details.append(itemNumber + ". ")
                         .append(item.getDescription())
                         .append(" - $")
-                        .append(item.calculatePrice())
+                        .append(String.format("%.2f",item.calculatePrice()))
                         .append("\n");
                 itemNumber ++;
             }

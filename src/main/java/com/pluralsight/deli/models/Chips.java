@@ -23,6 +23,7 @@ public class Chips extends Product {
     public String getDescription() {
         return type.getDisplayName() + "Chips";
     }
+
     @Override
     public double calculatePrice() {
         return 1.50;

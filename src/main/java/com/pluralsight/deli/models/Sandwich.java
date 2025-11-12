@@ -1,7 +1,6 @@
 package com.pluralsight.deli.models;
 
 import com.pluralsight.deli.enums.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
