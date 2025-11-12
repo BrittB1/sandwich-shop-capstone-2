@@ -11,24 +11,24 @@ public class Sandwich extends Product {
     private BreadType breadType;
     private List<MeatType> meat;
     private boolean hasExtraMeat;
-    private List<CheeseType> cheese;
+    private List<CheeseType> cheeses;
     private boolean hasExtraCheese;
-    private List <StandardTopping> topping;
-    private List <SauceType> sauce;
+    private List<StandardTopping> toppings;
+    private List<SauceType> sauces;
     private boolean toasted;
 
-public Sandwich(SandwichSize size,BreadType breadType) {
-    super("Sandwich");
-    this.size = size;
-    this.breadType = breadType;
-    this.meat = new ArrayList<>();
-    this.cheese = new ArrayList<>();
-    this.topping = new ArrayList<>();
-    this.sauce = new ArrayList<>();
-    this.hasExtraMeat = false;
-    this.hasExtraCheese = false;
-    this.toasted = false;
-}
+    public Sandwich(SandwichSize size, BreadType breadType) {
+        super("Sandwich");
+        this.size = size;
+        this.breadType = breadType;
+        this.meat = new ArrayList<>();
+        this.cheeses = new ArrayList<>();
+        this.toppings = new ArrayList<>();
+        this.sauces = new ArrayList<>();
+        this.hasExtraMeat = false;
+        this.hasExtraCheese = false;
+        this.toasted = false;
+    }
 
     public SandwichSize getSize() {
         return size;
@@ -62,12 +62,12 @@ public Sandwich(SandwichSize size,BreadType breadType) {
         this.hasExtraMeat = hasExtraMeats;
     }
 
-    public List<CheeseType> getCheese() {
-        return cheese;
+    public List<CheeseType> getCheeses() {
+        return cheeses;
     }
 
-    public void setCheese(List<CheeseType> cheese) {
-        this.cheese = cheese;
+    public void setCheeses(List<CheeseType> cheeses) {
+        this.cheeses = cheeses;
     }
 
     public boolean isHasExtraCheese() {
@@ -79,19 +79,19 @@ public Sandwich(SandwichSize size,BreadType breadType) {
     }
 
     public List<StandardTopping> getTopping() {
-        return topping;
+        return toppings;
     }
 
     public void setTopping(List<StandardTopping> topping) {
-        this.topping = topping;
+        this.toppings = topping;
     }
 
-    public List<SauceType> getSauce() {
-        return sauce;
+    public List<SauceType> getSauces() {
+        return sauces;
     }
 
-    public void setSauce(List<SauceType> sauce) {
-        this.sauce = sauce;
+    public void setSauces(List<SauceType> sauces) {
+        this.sauces = sauces;
     }
 
     public boolean isToasted() {
@@ -103,21 +103,76 @@ public Sandwich(SandwichSize size,BreadType breadType) {
     }
 
     public void addMeat(MeatType meat) {
-    this.meat.add(meat);
+        this.meat.add(meat);
     }
+
     public void addCheese(CheeseType cheese) {
-    this.cheese.add(cheese);
+        this.cheeses.add(cheese);
     }
-    public void addToppings (StandardTopping topping){
-    this.topping.add(topping);
+
+    public void addToppings(StandardTopping topping) {
+        this.toppings.add(topping);
     }
-    public void addSauces (SauceType sauce){
-    this.sauce.add(sauce);
+
+    public void addSauces(SauceType sauce) {
+        this.sauces.add(sauce);
     }
 
     @Override
     public String getDescription() {
-        return "";
+        StringBuilder description = new StringBuilder();
+
+        description.append(size.getDisplayName()).append(" ").append(breadType.getDisplayName()).append(" Sandwich");
+
+        if (toasted) {
+            description.append(" - Toasted");
+        }
+        if (!meat.isEmpty()) {
+            description.append("\n Meats: ");
+        }
+        for (int i = 0; i < meat.size(); i++) {
+            description.append(meat.get(i).getDisplayName());
+            if (i < meat.size() - 1) {
+                description.append(", ");
+            }
+        }
+        if (hasExtraMeat) {
+            description.append(" (Xtra Meat)");
+        }
+        if (!cheeses.isEmpty()) {
+            description.append("\n Cheeses: ");
+
+            for (int i = 0; i < cheeses.size(); i++) {
+                description.append(cheeses.get(i).getDisplayName());
+                if (i < cheeses.size() - 1) {
+                    description.append(", ");
+                }
+            }
+            if (hasExtraCheese) {
+                description.append(" (Xtra Cheese)");
+            }
+        }
+
+        if (!toppings.isEmpty()) {
+            description.append("\n Toppings: ");
+
+            for (int i = 0; i < toppings.size(); i++) {
+                description.append(toppings.get(i).getDisplayName());
+                if (i < toppings.size() - 1) {
+                    description.append(", ");
+                }
+            }
+        }
+        if (!sauces.isEmpty()) {
+            description.append("\n Sauces: ");
+            for (int i = 0; i < sauces.size(); i++) {
+                description.append(sauces.get(i).getDisplayName());
+                if (i < sauces.size() - 1) {
+                    description.append(", ");
+                }
+            }
+        }
+        return description.toString();
     }
 
     @Override
@@ -131,11 +186,12 @@ public Sandwich(SandwichSize size,BreadType breadType) {
     if (hasExtraMeat && !meat.isEmpty()){
         totalPrice += size.getExtraMeatPrice();
     }
-    totalPrice += cheese.size() * size.getCheesePrice();
+    totalPrice += cheeses.size() * size.getCheesePrice();
 
-    if (hasExtraCheese && !cheese.isEmpty()) {
+    if (hasExtraCheese && !cheeses.isEmpty()) {
         totalPrice += size.getExtraCheesePrice();
     }
         return totalPrice;
     }
+
 }

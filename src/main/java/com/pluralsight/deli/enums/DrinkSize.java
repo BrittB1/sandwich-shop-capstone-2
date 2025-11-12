@@ -1,17 +1,22 @@
 package com.pluralsight.deli.enums;
 
 public enum DrinkSize {
-    SMALL("Small"),
-    MEDIUM("Medium"),
-    LARGE("Large");
+    SMALL("Small",2.00),
+    MEDIUM("Medium",2.50),
+    LARGE("Large",3.00);
 
     private final String displayName;
+    private final double price;
 
-    DrinkSize(String displayName) {
+    DrinkSize(String displayName, double price) {
         this.displayName = displayName;
+        this.price = price;
     }
 
     public String getDisplayName() {
         return displayName;
+    }
+    public double getPrice(){
+        return price;
     }
 }
