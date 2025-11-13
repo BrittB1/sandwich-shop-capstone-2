@@ -1,5 +1,10 @@
 package com.pluralsight.deli.ui;
 
+import com.pluralsight.deli.enums.ChipType;
+import com.pluralsight.deli.enums.DrinkFlavor;
+import com.pluralsight.deli.enums.DrinkSize;
+import com.pluralsight.deli.models.Chips;
+import com.pluralsight.deli.models.Drink;
 import com.pluralsight.deli.models.Order;
 import com.pluralsight.deli.services.ReceiptWriter;
 
@@ -37,7 +42,7 @@ public class UserInterface {
 
                 switch (choice) {
 
-                    case "N":
+                    case "O":
                         currentOrder = new Order();
                         displayOrderScreen();
                         break;
@@ -86,8 +91,9 @@ public class UserInterface {
                 case 1 -> addSandwich();
                 case 2 -> addDrink();
                 case 3 -> addChips();
-                case 4 -> checkout();
-                case 0 -> cancelOrder();
+                //case 4 -> checkout();
+                case 0 -> System.out.println("Order Cancelled");
+                      // ordering = false;
                 default -> System.out.println(" Invalid option. Please try again..");
             }
         }
@@ -97,8 +103,70 @@ public class UserInterface {
     }
 
     private void addDrink() {
+        System.out.println("╔═════════════════════════════╗");
+        System.out.println("║          Add Drink          ║");
+        System.out.println("╚═════════════════════════════╝");
+
+        DrinkSize size = selectDrinkSize();
+        DrinkFlavor flavor = selectDrinkFlavor();
+
+        Drink drink = new Drink(size,flavor);
+        currentOrder.addItem(drink);
+
+        System.out.println("Drink added!");
+    }
+
+    private DrinkSize selectDrinkSize() {
+        DrinkSize[] sizes = DrinkSize.values();
+        for (int i = 0; i < sizes.length; i++) {
+            System.out.println((i + 1) + ". " + sizes[i].getDisplayName());
+        }
+        System.out.println("Choose a size: (1-" + sizes.length + "):");
+        int choice = Integer.parseInt(keyboard.nextLine().trim());
+
+        if (choice < 1 || choice > sizes.length) {
+            System.out.println("Invalid choice. Please try again.");
+            return DrinkSize.MEDIUM;
+        }
+        return sizes[choice - 1];
+    }
+
+    private DrinkFlavor selectDrinkFlavor() {
+
+        DrinkFlavor[] flavors = DrinkFlavor.values();
+        for (int i = 0; i < flavors.length; i++) {
+            System.out.println((i + 1) + ". " + flavors[i].getDisplayName());
+        }
+        System.out.println("Choose a flavor: (1-" + flavors.length + "):");
+        int choice = Integer.parseInt(keyboard.nextLine().trim());
+
+        if (choice < 1 || choice > flavors.length) {
+            System.out.println("Invalid choice. Defaulting to Water.");
+            return DrinkFlavor.WATER;
+        }
+        return flavors[choice - 1];
     }
 
     private void addChips() {
+        System.out.println("╔═════════════════════════════╗");
+        System.out.println("║          Add Chips          ║");
+        System.out.println("╚═════════════════════════════╝");
+
+        ChipType[] chips = ChipType.values();
+        for (int i = 0; i < chips.length; i++) {
+            System.out.println((i + 1) + ". " + chips[i].getDisplayName());
+        }
+        System.out.println("Choose some chips: (1-" + chips.length + "):");
+        int choice = Integer.parseInt(keyboard.nextLine().trim());
+
+        if (choice < 1 || choice > chips.length) {
+            System.out.println("Invalid choice. Please try again.");
+            return;
+        }
+        Chips selectedChips = new Chips(chips[choice - 1]);
+        currentOrder.addItem(selectedChips);
+
+        System.out.println("Chips added!");
     }
 }
+
