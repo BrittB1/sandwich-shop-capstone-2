@@ -91,10 +91,45 @@ public class UserInterface {
                 case 1 -> addSandwich();
                 case 2 -> addDrink();
                 case 3 -> addChips();
-                //case 4 -> checkout();
-                case 0 -> System.out.println("Order Cancelled");
-                      // ordering = false;
+                case 4 -> checkout();
+                case 0 -> {
+                    System.out.println("Order Cancelled. All items Removed");
+                    currentOrder.clearOrder();
+                    ordering = false;
+                }
                 default -> System.out.println(" Invalid option. Please try again..");
+            }
+        }
+    }
+
+    private void checkout() {
+
+        System.out.println("╔═════════════════════════════╗");
+        System.out.println("║           Checkout          ║");
+        System.out.println("╚═════════════════════════════╝");
+        currentOrder.getOrderDetails();
+
+        if (!currentOrder.isValid()){
+            System.out.println("Can't checkout - order is empty!");
+            return;
+
+        } else {
+            System.out.println(currentOrder.getOrderDetails());
+
+            System.out.println("Confirm order? (y/n): ");
+            String confirmation = keyboard.nextLine().trim().toUpperCase();
+
+            if (confirmation.equals("Y")){
+                rw.saveReceipt(currentOrder);
+                System.out.println("╔══════════════════════════════════════════════════════╗");
+                System.out.println("║\uD83C\uDF89 Order complete - your receipt has been saved!   ║");
+                System.out.println("║                 Thanks for your order                ║");
+                System.out.println("╚══════════════════════════════════════════════════════╝");
+                currentOrder = new Order();
+
+            } else {
+                System.out.println("Checkout cancelled - returning to ordering menu");
+
             }
         }
     }

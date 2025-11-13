@@ -14,7 +14,7 @@ public class ReceiptWriter {
     public String generateFileName() {
 
         LocalDateTime currentTime = LocalDateTime.now();
-        String pattern = "yyyy-MM-dd-HH:mm:ss";
+        String pattern = "yyyyMMdd-HHmmss";
 
         DateTimeFormatter f = DateTimeFormatter.ofPattern(pattern);
 
