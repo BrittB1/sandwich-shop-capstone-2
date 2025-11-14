@@ -37,7 +37,6 @@ public class ReceiptWriter {
             }
         }
     }
-
     public void saveReceipt(Order order) {
         ensureReceiptsFolderExists();
         String fileName = generateFileName();

@@ -1,11 +1,10 @@
 package com.pluralsight.deli.ui;
 
-import com.pluralsight.deli.enums.ChipType;
-import com.pluralsight.deli.enums.DrinkFlavor;
-import com.pluralsight.deli.enums.DrinkSize;
+import com.pluralsight.deli.enums.*;
 import com.pluralsight.deli.models.Chips;
 import com.pluralsight.deli.models.Drink;
 import com.pluralsight.deli.models.Order;
+import com.pluralsight.deli.models.Sandwich;
 import com.pluralsight.deli.services.ReceiptWriter;
 
 import java.util.Scanner;
@@ -133,8 +132,110 @@ public class UserInterface {
             }
         }
     }
-
     private void addSandwich() {
+        System.out.println("╔═════════════════════════════╗");
+        System.out.println("║\uD83D\uDD28 Build your sandwich   ║");
+        System.out.println("╚═════════════════════════════╝");
+
+        BreadType type = selectBreadType();
+        SandwichSize size = selectSandwichSize();
+
+        Sandwich sandwich = new Sandwich(size,type);
+
+        addMeatsToSandwich(sandwich);
+        addCheesesToSandwich(sandwich);
+        addToppingsToSandwich(sandwich);
+        addSaucesToSandwich(sandwich);
+        askIfToasted(sandwich);
+
+        currentOrder.addItem(sandwich);
+
+        System.out.println("\uD83E\uDD6A Sandwich added to order!");
+
+    }
+
+    private void askIfToasted(Sandwich sandwich) {
+    }
+
+    private void addSaucesToSandwich(Sandwich sandwich) {
+    }
+
+    private void addToppingsToSandwich(Sandwich sandwich) {
+    }
+
+    private void addCheesesToSandwich(Sandwich sandwich) {
+    }
+
+    private void addMeatsToSandwich(Sandwich sandwich) {
+
+        System.out.println("╔═════════════════════════════╗");
+        System.out.println("║\uD83C\uDF56 Add Meats       ║");
+        System.out.println("╚═════════════════════════════╝");
+
+        while (true) {
+
+            System.out.println("Meats added: " + sandwich.getMeat().size());
+            MeatType [] meat = MeatType.values();
+
+            for (int i = 0; i < meat.length; i++) {
+                System.out.println((i + 1) + ". " + meat[i].getDisplayName());
+            }
+            System.out.println("0. Done adding meats");
+
+            System.out.println("Choose meat (Select '0' when done): ");
+            int choice = Integer.parseInt(keyboard.nextLine().trim());
+
+            if (choice == 0) {
+                break;
+            }
+            if (choice < 1 || choice > meat.length) {
+                System.out.println("Invalid choice. Please try again.");
+                continue;
+            }
+            sandwich.addMeat(meat[choice - 1]);
+            System.out.println(meat[choice - 1].getDisplayName() + "added!");
+        }
+        if (!sandwich.getMeat().isEmpty()) {
+            System.out.println("Would you like Xtra meat? (y/n): ");
+            String xtraMeat = keyboard.nextLine().trim().toUpperCase();
+
+            if (xtraMeat == "Y"){
+                sandwich.setHasExtraMeat(true);
+                System.out.println("Extra meat added!");
+            }
+        }
+
+}
+
+    private SandwichSize selectSandwichSize() {
+
+        SandwichSize[] length = SandwichSize.values();
+        for (int i = 0; i < length.length; i++) {
+            System.out.println((i + 1) + ". " + length[i].getDisplayName());
+        }
+        System.out.println("Choose a sandwich size: 1-" + length.length + "):");
+        int selection = Integer.parseInt(keyboard.nextLine().trim());
+
+        if (selection < 1 || selection > length.length) {
+            System.out.println("Invalid choice. Please try again.");
+            return SandwichSize.MEDIUM;
+        }
+        return length[selection - 1];
+    }
+
+    private BreadType selectBreadType() {
+        BreadType[] types = BreadType.values();
+        for (int i = 0; i < types.length; i++) {
+            System.out.println((i + 1) + ". " + types[i].getDisplayName());
+        }
+        System.out.println("Choose a bread type: 1-" + types.length + "):");
+        int selection = Integer.parseInt(keyboard.nextLine().trim());
+
+        if (selection < 1 || selection > types.length) {
+            System.out.println("Invalid choice. Please try again.");
+            return BreadType.WHITE;
+        }
+        return types[selection - 1];
     }
 
     private void addDrink() {
