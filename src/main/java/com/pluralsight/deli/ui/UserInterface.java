@@ -74,7 +74,7 @@ public class UserInterface {
                     ║     ═════════════════════════════   ║
                     ║       1. 🥪 Add Sandwich            ║
                     ║                                     ║
-                    ║       2. 🥤 Add Drink               ║ 
+                    ║       2. 🥤 Add Drink               ║
                     ║                                     ║
                     ║       3. 🍟 Add Chips               ║
                     ║                                     ║
@@ -199,14 +199,12 @@ public class UserInterface {
             System.out.println("Would you like Xtra meat? (y/n): ");
             String xtraMeat = keyboard.nextLine().trim().toUpperCase();
 
-            if (xtraMeat == "Y"){
+            if (xtraMeat.equals("Y")){
                 sandwich.setHasExtraMeat(true);
                 System.out.println("Extra meat added!");
             }
         }
-
 }
-
     private SandwichSize selectSandwichSize() {
 
         SandwichSize[] length = SandwichSize.values();
